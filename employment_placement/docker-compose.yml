@@ -1,0 +1,29 @@
+services:
+  
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app:/var/www/employment_placement
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=adminpass
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: employment_placement_db
+      POSTGRES_USER: db_admin_role
+      POSTGRES_PASSWORD: H4r*dp3S$!..{
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
